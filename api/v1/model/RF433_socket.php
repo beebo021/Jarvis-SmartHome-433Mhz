@@ -61,7 +61,7 @@ class RF433_socket extends Thing
 		}
 		else if ($cmd=="SWITCH")
 		{
-			if ($this->status == "ON") $this->sendCmd("OFF", $value);
+			if ($this->status == 1) $this->sendCmd("OFF", $value);
 			else $this->sendCmd("ON", $value);
 		}
 		else 
