@@ -27,4 +27,3 @@ We will make a kind of "433Mhz USB remote control" with an Arduino board and the
 The commands that you'll send to turn on and off the actuators is not cypher. So... the bad news is that your neighbor can copy the commands when you are sending them, the good news is that you actually know where he lives ;)
 
 Obviously it is not the safer system in the market, but it is damn cheap, so... use it under your own risk.
-
