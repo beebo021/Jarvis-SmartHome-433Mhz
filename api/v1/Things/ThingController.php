@@ -1,7 +1,7 @@
 <?php
 
-require_once 'factory/ThingFactory.php';
-require_once 'model/Thing.php';
+require_once 'Things/ThingFactory.php';
+require_once 'Things/Thing.php';
 
 class ThingController
 {
@@ -14,7 +14,7 @@ class ThingController
 		$this->conection = new Mysql();
 	}
 	
-	function thingsForParent ($cod_parent)
+	function thingsWithParent ($cod_parent)
 	{
 		$factory = new ThingFactory();
 	
@@ -30,7 +30,7 @@ class ThingController
 		return $r;
 	}
 	
-	function thingForCod ($cod)
+	function thingWithCod ($cod)
 	{
 		$factory = new ThingFactory();
 	
@@ -43,6 +43,20 @@ class ThingController
 			$thing = $factory->thingForData($line);
 			return $thing;
 		}
+	}
+	
+	function newThingWithKind ($kind)
+	{
+		$factory = new ThingFactory();
+		
+		$thing = $factory->newThingWithKind($kind);
+		
+		return $thing;
+	}
+	
+	function deleteThingWithCod($cod)
+	{
+		$this->conection->consultDel("DELETE FROM things WHERE cod='".$cod."' LIMIT 1");
 	}
 }
 ?>

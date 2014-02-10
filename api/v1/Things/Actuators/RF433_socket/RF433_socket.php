@@ -17,6 +17,30 @@ class RF433_socket extends Thing
 		$this->cmdList[] = "SWITCH";
 	}
 	
+	function initWithPost() 
+	{
+		$this->kind = "Area";
+		$this->name = $_POST["name"];
+		$this->status = 0;
+		$this->icon = $_POST["icon"];
+		$this->cod_parent = $_POST["cod_parent"];
+		$this->ord = $_POST["ord"];
+		
+		$this->commands["ON"] = $_POST["commands"]["ON"];
+		$this->commands["OFF"] = $_POST["commands"]["OFF"];
+	}
+	
+	function updateWithPost()
+	{
+		$this->name = $_POST["name"];
+		$this->icon = $_POST["icon"];
+		$this->cod_parent = $_POST["cod_parent"];
+		$this->ord = $_POST["ord"];
+		
+		$this->commands["ON"] = $_POST["commands"]["ON"];
+		$this->commands["OFF"] = $_POST["commands"]["OFF"];
+	}
+	
 	function initWithData($data) 
 	{
 		parent::initWithData($data);

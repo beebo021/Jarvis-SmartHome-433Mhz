@@ -38,6 +38,14 @@ class Thing
 		$this->config = json_decode($data["config"]);
 	}
 	
+	function initWithPost() 
+	{
+	}
+	
+	function updateWithPost()
+	{
+	}
+	
 	function getCmdList()
 	{
 		return $this->cmdList;
@@ -77,6 +85,18 @@ class Thing
 	
 	function save() 
 	{
+		if ($this->cod)
+		{
+			$this->update();
+		}
+		else 
+		{
+			$this->insert();
+		}
+	}
+	
+	function update() 
+	{
 		$consult = "UPDATE 
 						".$this->tableName." 
 					SET 
@@ -95,8 +115,25 @@ class Thing
 		$r = $this->conection->consultUpd($consult);
 	}
 	
-	
-	
+	function insert() 
+	{
+		$consult = "INSERT INTO 
+						".$this->tableName." 
+					VALUES ( NULL,
+							'".$this->kind."', 
+							'".$this->name."', 
+							'".$this->configDetail()."', 
+							'".$this->status."',
+							'".$this->icon."', 
+							'".$this->cod_parent."', 
+							'".$this->ord."', 
+							NOW(),
+							NOW() )";
+
+		$cod = $this->conection->consultIns($consult);
+		
+		if ($cod) $this->cod = $cod;
+	}
 	
 	function sendCmd($cmd, $value) {}
 }

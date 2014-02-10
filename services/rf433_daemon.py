@@ -13,8 +13,8 @@ insert = 0
 
 conn = MySQLdb.connect(host= "localhost",
                   user="root",
-                  passwd="raspberry",
-                  db="iDomo")
+                  passwd="root",
+                  db="jarvis")
 
 ser = serial.Serial('/dev/ttyUSB0', 9600)
 
@@ -45,7 +45,7 @@ while 1 :
 			x = conn.cursor()
 			
 			try:
-				x.execute("""INSERT INTO rflog VALUES (NULL, %s, %s, %s, %s, NOW())""",(values[0], values[1], values[2], values[3]))
+				x.execute("""INSERT INTO rf433_log VALUES (NULL, %s, %s, %s, %s, NOW())""",(values[0], values[1], values[2], values[3]))
 				conn.commit()
 			except:
 				conn.rollback()
