@@ -1,7 +1,6 @@
 <?php
-require_once 'class/Mysql.php';
+require_once 'Class/Mysql.php';
 require_once 'Things/ThingController.php';
-require_once 'Things/Thing.php';
 
 require_once 'Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
@@ -34,14 +33,14 @@ $app->get('/things/parent/:cod_parent', function ($cod_parent) use ($app)
 
 });
 
-$app->post('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app) 
+$app->get('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app) 
 {	
 	$r = array();
 	
 	$controller = new ThingController();
 	$thing = $controller->thingWithCod($cod_thing);
 
-	$thing->sendCmd($cmd, 0);
+	$thing->addCmd(0, $cmd, 0);
 	
 	$r["response"] = $thing->description();
 	
@@ -51,6 +50,8 @@ $app->post('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app
 	$app->response->headers->set('Content-Type', 'application/json');
 	$app->response->setBody($json);
 });
+
+
 
 $app->post('/things/:kind/new', function ($kind) use ($app) 
 {	
@@ -69,7 +70,7 @@ $app->post('/things/:kind/new', function ($kind) use ($app)
 	
 });
 
-$app->post('/things/update/:cod_thing', function ($cod_thing) use ($app) 
+$app->post('/things/:cod_thing/update', function ($cod_thing) use ($app) 
 {	
 	$r = array();
 	
@@ -103,6 +104,79 @@ $app->post('/things/:cod_thing/delete', function ($cod_thing) use ($app)
 	$app->response->setStatus(200);
 	$app->response->headers->set('Content-Type', 'application/json');
 	$app->response->setBody($json);
+	
+});
+
+$app->get('/things/:cod_thing/rules/timely', function ($cod_thing) use ($app) 
+{	
+	$r = array();
+	
+	$controller = new ThingController();
+	$thing = $controller->thingWithCod($cod_thing);
+	
+	$result = $thing->getRules(1); //1 = Timely
+	
+	foreach ($result as &$rule) 
+	{
+    	$r["response"][] = $rule->description();
+	}
+	
+	$json = json_encode($r);
+	
+	$app->response->setStatus(200);
+	$app->response->headers->set('Content-Type', 'application/json');
+	$app->response->setBody($json);
+});
+
+
+$app->get('/things/:cod_thing/rules/notimely', function ($cod_thing) use ($app) 
+{	
+	$r = array();
+	
+	$controller = new ThingController();
+	$thing = $controller->thingWithCod($cod_thing);
+	
+	$result = $thing->getRules(0); //0 = NO Timely
+	
+	foreach ($result as &$rule) 
+	{
+    	$r["response"][] = $rule->description();
+	}
+	
+	$json = json_encode($r);
+	
+	$app->response->setStatus(200);
+	$app->response->headers->set('Content-Type', 'application/json');
+	$app->response->setBody($json);
+});
+
+$app->get('/things/:cod_thing/rules/timely/new', function ($cod_thing) use ($app) 
+{	
+	
+});
+
+$app->get('/things/:cod_thing/rules/timely/update', function ($cod_thing) use ($app) 
+{	
+	
+});
+
+$app->get('/things/:cod_thing/rules/timely/delete', function ($cod_thing) use ($app) 
+{	
+	
+});
+
+$app->get('/things/:cod_thing/rules/notimely/new', function ($cod_thing) use ($app) 
+{	
+	
+});
+
+$app->get('/things/:cod_thing/rules/notimely/update', function ($cod_thing) use ($app) 
+{	
+	
+});
+
+$app->get('/things/:cod_thing/rules/notimely/delete', function ($cod_thing) use ($app) 
+{	
 	
 });
 

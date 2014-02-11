@@ -1,7 +1,5 @@
 <?php
-require_once 'Things/Thing.php';
 require_once 'Things/Actuators/ActuatorFactory.php';
-
 require_once 'Things/Others/Area.php';
 
 

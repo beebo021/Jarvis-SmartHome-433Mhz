@@ -1,4 +1,6 @@
 <?php
+require_once 'Things/Rules/Rule.php';
+
 class Thing
 {
 	var $conection;
@@ -37,15 +39,7 @@ class Thing
 
 		$this->config = json_decode($data["config"]);
 	}
-	
-	function initWithPost() 
-	{
-	}
-	
-	function updateWithPost()
-	{
-	}
-	
+		
 	function getCmdList()
 	{
 		return $this->cmdList;
@@ -59,6 +53,8 @@ class Thing
 	function setStatus($status)
 	{
 		$this->status = $status;
+		$this->save();
+		$this->checkRules();
 	}
 	
 	function description()
@@ -79,10 +75,7 @@ class Thing
 		
 		return $r;
 	}
-	
-	function configDescription() {}
-	function configDetail() {}
-	
+		
 	function save() 
 	{
 		if ($this->cod)
@@ -134,7 +127,54 @@ class Thing
 		
 		if ($cod) $this->cod = $cod;
 	}
+
+	function getRules($timely) {
+		
+		$r = array();
+		
+		$result = $this->conection->consult("SELECT * FROM rules WHERE cod_thing = '".$this->cod."' AND timely = '".$timely."' ORDER BY name ASC");
+		
+		while ($line = mysql_fetch_array($result))
+		{
+			$rule = new Rule();
+			$rule->initWithData($line);
+			$r[] = $rule;
+		}
 	
+		return $r;
+	}
+	
+	function checkRules() {
+		
+		$rules = $this->getRules(0); //No timely
+		
+		foreach ($rules as &$rule) 
+		{
+	    	$rule->check();
+		}
+	}
+
+	function addCmd($delay, $cmd, $value) {
+		
+		$triggerAt = date("Y-m-d H:i:s", strtotime("+".$delay." seconds"));
+		
+		$consult = "INSERT INTO cmds_queue
+					VALUES ( NULL,
+							'".$this->cod."', 
+							'".$cmd."', 
+							'".$value."', 
+							'".$triggerAt."',
+							'', 
+							'0' )";
+		
+		$this->conection->consultIns($consult);
+	}
+	
+	
+	function initWithPost() {}
+	function updateWithPost() {}
+	function configDescription() {}
+	function configDetail() {}
 	function sendCmd($cmd, $value) {}
 }
 ?>

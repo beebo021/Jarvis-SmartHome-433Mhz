@@ -75,13 +75,11 @@ class RF433_socket extends Thing
 		{
 			$this->sendSerial($this->commands[$cmd]);
 			$this->setStatus(1);
-			$this->save();
 		}
 		else if ($cmd=="OFF")
 		{
 			$this->sendSerial($this->commands[$cmd]);
 			$this->setStatus(0);
-			$this->save();
 		}
 		else if ($cmd=="SWITCH")
 		{

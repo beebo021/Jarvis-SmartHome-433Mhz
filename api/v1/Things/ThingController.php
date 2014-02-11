@@ -1,7 +1,6 @@
 <?php
-
-require_once 'Things/ThingFactory.php';
 require_once 'Things/Thing.php';
+require_once 'Things/ThingFactory.php';
 
 class ThingController
 {
@@ -40,7 +39,7 @@ class ThingController
 		
 		if ($line)
 		{
-			$thing = $factory->thingForData($line);
+			$thing = $factory->thingWithData($line);
 			return $thing;
 		}
 	}
