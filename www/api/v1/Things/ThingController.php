@@ -13,6 +13,22 @@ class ThingController
 		$this->conection = new Mysql();
 	}
 	
+	function thingsUpdated ($updatedAt)
+	{
+		$factory = new ThingFactory();
+	
+		$r = array();
+		
+		$result = $this->conection->consult("SELECT * FROM things WHERE updatedAt > '".$updatedAt."' ORDER BY cod ASC");
+		
+		while ($line = mysql_fetch_array($result))
+		{
+			$r[] = $factory->thingWithData($line);
+		}
+	
+		return $r;
+	}
+	
 	function thingsWithParent ($cod_parent)
 	{
 		$factory = new ThingFactory();
@@ -23,7 +39,7 @@ class ThingController
 		
 		while ($line = mysql_fetch_array($result))
 		{
-			$r[] = $factory->thingForData($line);
+			$r[] = $factory->thingWithData($line);
 		}
 	
 		return $r;
@@ -56,6 +72,7 @@ class ThingController
 	function deleteThingWithCod($cod)
 	{
 		$this->conection->consultDel("DELETE FROM things WHERE cod='".$cod."' LIMIT 1");
+		$this->conection->consultDel("DELETE FROM rf433_daemon WHERE cod_thing='".$cod."'");
 	}
 }
 ?>

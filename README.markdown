@@ -28,6 +28,6 @@ The commands that you'll send to turn on and off the actuators are not cypher. S
 
 Obviously it is not the safer system in the market, but it is damn cheap, so... use it under your own risk.
 
-## Progress [### 25%       ]
+## Progress [#### 35%      ]
 
 I'm still working on it, I hope to have a first beta in few days.

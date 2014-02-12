@@ -11,6 +11,26 @@ $app->get('/', function ()
     echo "OK";
 });
 
+$app->get('/things/updated', function () use ($app) 
+{	
+	$r = array();
+	
+	$controller = new ThingController();
+	
+	$result = $controller->thingsUpdated($_POST["updatedAt"]);
+	
+	foreach ($result as &$thing) 
+	{
+    	$r["response"][] = $thing->description();
+	}
+	
+	$json = json_encode($r);
+	
+	$app->response->setStatus(200);
+	$app->response->headers->set('Content-Type', 'application/json');
+	$app->response->setBody($json);
+});
+
 $app->get('/things/parent/:cod_parent', function ($cod_parent) use ($app) 
 {	
 	$r = array();
@@ -26,11 +46,9 @@ $app->get('/things/parent/:cod_parent', function ($cod_parent) use ($app)
 	
 	$json = json_encode($r);
 	
-	
 	$app->response->setStatus(200);
 	$app->response->headers->set('Content-Type', 'application/json');
 	$app->response->setBody($json);
-
 });
 
 $app->get('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app) 
@@ -51,8 +69,6 @@ $app->get('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app)
 	$app->response->setBody($json);
 });
 
-
-
 $app->post('/things/:kind/new', function ($kind) use ($app) 
 {	
 	$r = array();
@@ -67,7 +83,6 @@ $app->post('/things/:kind/new', function ($kind) use ($app)
 	$app->response->setStatus(200);
 	$app->response->headers->set('Content-Type', 'application/json');
 	$app->response->setBody($json);
-	
 });
 
 $app->post('/things/:cod_thing/update', function ($cod_thing) use ($app) 
@@ -87,7 +102,6 @@ $app->post('/things/:cod_thing/update', function ($cod_thing) use ($app)
 	$app->response->setStatus(200);
 	$app->response->headers->set('Content-Type', 'application/json');
 	$app->response->setBody($json);
-	
 });
 
 $app->post('/things/:cod_thing/delete', function ($cod_thing) use ($app) 
@@ -104,7 +118,6 @@ $app->post('/things/:cod_thing/delete', function ($cod_thing) use ($app)
 	$app->response->setStatus(200);
 	$app->response->headers->set('Content-Type', 'application/json');
 	$app->response->setBody($json);
-	
 });
 
 $app->get('/things/:cod_thing/rules/timely', function ($cod_thing) use ($app) 

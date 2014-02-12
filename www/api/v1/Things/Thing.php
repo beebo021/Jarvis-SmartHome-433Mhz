@@ -52,6 +52,7 @@ class Thing
 	
 	function setStatus($status)
 	{
+		$this->addStatusLog($status);
 		$this->status = $status;
 		$this->save();
 		$this->checkRules();
@@ -170,6 +171,16 @@ class Thing
 		$this->conection->consultIns($consult);
 	}
 	
+	function addStatusLog($status)
+	{
+		$consult = "INSERT INTO things_log
+					VALUES ( NULL,
+							'".$this->cod."', 
+							'".$status."', 
+							NOW() )";
+		
+		$this->conection->consultIns($consult);
+	}
 	
 	function initWithPost() {}
 	function updateWithPost() {}
