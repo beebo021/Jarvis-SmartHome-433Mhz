@@ -51,7 +51,7 @@ $app->get('/things/parent/:cod_parent', function ($cod_parent) use ($app)
 	$app->response->setBody($json);
 });
 
-$app->get('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app) 
+$app->post('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app) 
 {	
 	$r = array();
 	

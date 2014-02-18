@@ -1,5 +1,4 @@
 <?php
-require_once 'class/php_serial.class.php';
 
 class RF433_movement extends Thing
 {	

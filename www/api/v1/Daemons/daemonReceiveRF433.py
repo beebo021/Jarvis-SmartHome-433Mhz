@@ -13,7 +13,7 @@ insert = 0
 
 conn = MySQLdb.connect(host= "localhost",
                   user="root",
-                  passwd="root",
+                  passwd="Fb8HxuyP4%AvWhJnwQaf",
                   db="jarvis")
 
 ser = serial.Serial('/dev/ttyUSB0', 9600)

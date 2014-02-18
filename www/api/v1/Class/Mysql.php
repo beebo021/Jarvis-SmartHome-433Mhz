@@ -6,7 +6,7 @@ class Mysql
 	var $host = "localhost";
 	var $user = "root";
 	//var $pass = "raspberry";
-	var $pass = "root";
+	var $pass = "Fb8HxuyP4%AvWhJnwQaf";
 	var $db = "jarvis";
 	
 	

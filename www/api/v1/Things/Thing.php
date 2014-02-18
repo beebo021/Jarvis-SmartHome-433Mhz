@@ -74,6 +74,8 @@ class Thing
 		
 		$r["config"] = $this->configDescription();
 		
+		if (!$r["config"]) $r["config"]="";
+		
 		return $r;
 	}
 		

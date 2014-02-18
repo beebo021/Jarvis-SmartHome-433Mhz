@@ -1,5 +1,5 @@
 <?php
-require_once 'class/php_serial.class.php';
+require_once 'Class/php_serial.class.php';
 
 class RF433_socket extends Thing
 {	
@@ -94,12 +94,12 @@ class RF433_socket extends Thing
 	
 	function sendSerial($text)
 	{
-		/*$serial = new phpSerial;
+		$serial = new phpSerial;
 		$serial->deviceSet("/dev/ttyUSB0");
 		$serial->confBaudRate(9600);
 		$serial->deviceOpen();
 		$serial->sendMessage($text);
-		$serial->deviceClose();*/
+		$serial->deviceClose();
 	}
 }
 ?>
