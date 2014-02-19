@@ -19,7 +19,9 @@
 			if (!$num)
 			{
 				echo ".";
-				sleep(1);
+				//sleep(1); // 1 Second
+				//usleep(1000000); // 1 Second
+				usleep(250000); // 0,25 Second
 			}
 		}
 	}

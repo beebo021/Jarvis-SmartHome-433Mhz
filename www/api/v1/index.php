@@ -60,6 +60,48 @@ $app->post('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app
 
 	$thing->addCmd(0, $cmd, 0);
 	
+	usleep(500000);
+	
+	$thing2 = $controller->thingWithCod($cod_thing);
+	
+	$r["response"] = $thing2->description();
+	
+	$json = json_encode($r);
+	
+	$app->response->setStatus(200);
+	$app->response->headers->set('Content-Type', 'application/json');
+	$app->response->setBody($json);
+});
+
+$app->get('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app) 
+{	
+	$r = array();
+	
+	$controller = new ThingController();
+	$thing = $controller->thingWithCod($cod_thing);
+
+	$thing->addCmd(0, $cmd, 0);
+	
+	usleep(500000);
+	
+	$thing2 = $controller->thingWithCod($cod_thing);
+	
+	$r["response"] = $thing2->description();
+	
+	$json = json_encode($r);
+	
+	$app->response->setStatus(200);
+	$app->response->headers->set('Content-Type', 'application/json');
+	$app->response->setBody($json);
+});
+
+$app->get('/things/:cod_thing', function ($cod_thing) use ($app) 
+{	
+	$r = array();
+	
+	$controller = new ThingController();
+	$thing = $controller->thingWithCod($cod_thing);
+
 	$r["response"] = $thing->description();
 	
 	$json = json_encode($r);

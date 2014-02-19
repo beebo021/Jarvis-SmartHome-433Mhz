@@ -32,3 +32,17 @@ The commands that you'll send to turn on and off the actuators are not cypher. S
 
 Obviously it is not the safer system in the market, but it is damn cheap, so... use it under your own risk.
 
+# INSTALL
+
+01. Download Raspbian and install on your SD.
+02. apt-get update; apt-get upgrade; apt-get dist-upgrade; apt-get auto remove; apt-get autoclean
+03. apt-get install apache2
+04. apt-get install mysql-server
+05. apt-get install php5 php5-common php5-cli php-pear php5-mysql
+06. chown -R www-data:www-data /var/www
+07. chmod -R 775 /var/www
+08. usermod -a -G www-data pi
+09. apt-get install phpmyadmin
+11. rpi-update
+12. cp init.d/jarvis /etc/init.d
+13. update-rc.d jarvis defaults
