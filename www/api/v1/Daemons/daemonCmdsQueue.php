@@ -22,6 +22,8 @@
 				//sleep(1); // 1 Second
 				//usleep(1000000); // 1 Second
 				usleep(250000); // 0,25 Second
+			
+				echo ":)";
 			}
 		}
 	}
