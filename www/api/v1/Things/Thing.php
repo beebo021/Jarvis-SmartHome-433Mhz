@@ -12,7 +12,7 @@ class Thing
 	var $kind;
 	var $name;
 	var $icon;
-	var $cod_parent;
+	var $cod_area;
 	var $ord;	
 	var $config;
 	var $status;
@@ -32,7 +32,7 @@ class Thing
 		$this->name = $data["name"];
 		$this->status = $data["status"];
 		$this->icon = $data["icon"];
-		$this->cod_parent = $data["cod_parent"];
+		$this->cod_area = $data["cod_area"];
 		$this->ord = $data["ord"];
 		$this->createdAt = $data["createdAt"];
 		$this->updatedAt = $data["updatedAt"];
@@ -66,7 +66,7 @@ class Thing
 		$r["kind"] = $this->kind;
 		$r["name"] = $this->name;
 		$r["icon"] = $this->icon;
-		$r["cod_parent"] = $this->cod_parent;
+		$r["cod_area"] = $this->cod_area;
 		$r["ord"] = $this->ord;
 		$r["status"] = $this->status;
 		$r["updatedAt"] = $this->updatedAt;
@@ -99,7 +99,7 @@ class Thing
 						kind = '".$this->kind."', 
 						name = '".$this->name."', 
 						icon = '".$this->icon."', 
-						cod_parent = '".$this->cod_parent."', 
+						cod_area = '".$this->cod_area."', 
 						ord = '".$this->ord."', 
 						status = '".$this->status."',
 						createdAt = '".$this->createdAt."',
@@ -121,7 +121,7 @@ class Thing
 							'".$this->configDetail()."', 
 							'".$this->status."',
 							'".$this->icon."', 
-							'".$this->cod_parent."', 
+							'".$this->cod_area."', 
 							'".$this->ord."', 
 							NOW(),
 							NOW() )";

@@ -31,13 +31,13 @@ $app->get('/things/updated', function () use ($app)
 	$app->response->setBody($json);
 });
 
-$app->get('/things/parent/:cod_parent', function ($cod_parent) use ($app) 
+$app->get('/things/parent/:cod_area', function ($cod_area) use ($app) 
 {	
 	$r = array();
 	
 	$controller = new ThingController();
 	
-	$result = $controller->thingsWithParent($cod_parent);
+	$result = $controller->thingsWithParent($cod_area);
 	
 	foreach ($result as &$thing) 
 	{

@@ -2,7 +2,7 @@
 
 Jarvis is a WebApp that allows you to turn your home into a DIY SmartHome.
 
-### Progress [#### 36%      ]
+### Progress [#### 37%      ]
 
 I'm still working on it, I hope to have a first beta in few days.
 

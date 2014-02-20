@@ -23,7 +23,7 @@ class RF433_socket extends Thing
 		$this->name = $_POST["name"];
 		$this->status = 0;
 		$this->icon = $_POST["icon"];
-		$this->cod_parent = $_POST["cod_parent"];
+		$this->cod_area = $_POST["cod_area"];
 		$this->ord = $_POST["ord"];
 		
 		$this->commands["ON"] = $_POST["commands"]["ON"];
@@ -34,7 +34,7 @@ class RF433_socket extends Thing
 	{
 		$this->name = $_POST["name"];
 		$this->icon = $_POST["icon"];
-		$this->cod_parent = $_POST["cod_parent"];
+		$this->cod_area = $_POST["cod_area"];
 		$this->ord = $_POST["ord"];
 		
 		$this->commands["ON"] = $_POST["commands"]["ON"];

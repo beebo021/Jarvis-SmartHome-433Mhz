@@ -29,13 +29,13 @@ class ThingController
 		return $r;
 	}
 	
-	function thingsWithParent ($cod_parent)
+	function thingsWithParent ($cod_area)
 	{
 		$factory = new ThingFactory();
 	
 		$r = array();
 		
-		$result = $this->conection->consult("SELECT * FROM things WHERE cod_parent = '".$cod_parent."' ORDER BY ord ASC, name ASC");
+		$result = $this->conection->consult("SELECT * FROM things WHERE cod_area = '".$cod_area."' ORDER BY ord ASC, name ASC");
 		
 		while ($line = mysql_fetch_array($result))
 		{
