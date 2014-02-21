@@ -30,5 +30,14 @@ class Area extends Thing
 		$this->cod_area = $_POST["cod_area"];
 		$this->ord = $_POST["ord"];
 	}
+	
+	function configDetail()
+	{
+		$r = array();
+		
+		$r["config"] = "";
+		
+		return json_encode($r);
+	}
 }
 ?>
