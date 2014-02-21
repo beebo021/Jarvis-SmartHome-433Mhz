@@ -13,27 +13,30 @@ $app->get('/', function ()
 
 $app->get('/things/updated', function () use ($app) 
 {	
-	$r = array();
+	$response = array();
 	
 	$controller = new ThingController();
 	
-	$result = $controller->thingsUpdated($_POST["updatedAt"]);
+	$updatedAt = $app->request->get('updatedAt');
+
+	$result = $controller->thingsUpdated($updatedAt);
 	
 	foreach ($result as &$thing) 
 	{
-    	$r["response"][] = $thing->description();
+    	$response[] = $thing->description();
 	}
 	
-	$json = json_encode($r);
+	$return = array();
+	$return["response"] = $response;
+	$json = json_encode($return);
 	
 	$app->response->setStatus(200);
 	$app->response->headers->set('Content-Type', 'application/json');
-	$app->response->setBody($json);
-});
+	$app->response->setBody($json);});
 
 $app->get('/things/parent/:cod_area', function ($cod_area) use ($app) 
 {	
-	$r = array();
+	$response = array();
 	
 	$controller = new ThingController();
 	
@@ -41,10 +44,12 @@ $app->get('/things/parent/:cod_area', function ($cod_area) use ($app)
 	
 	foreach ($result as &$thing) 
 	{
-    	$r["response"][] = $thing->description();
+    	$response[] = $thing->description();
 	}
 	
-	$json = json_encode($r);
+	$return = array();
+	$return["response"] = $response;
+	$json = json_encode($return);
 	
 	$app->response->setStatus(200);
 	$app->response->headers->set('Content-Type', 'application/json');
