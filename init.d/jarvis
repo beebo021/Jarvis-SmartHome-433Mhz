@@ -18,8 +18,7 @@ case "$1" in
     screen -X -S jarvis1 kill > /dev/null
     screen -DmS jarvis1 php Daemons/daemonCmdsQueue.php &
     screen -DmS jarvis2 php Daemons/daemonRulesTimely.php &
-    sleep 10
-    screen -DmS jarvis3 python Daemons/daemonReceiveRF433.py &
+    screen -DmS jarvis3 php Daemons/daemonReceiveRF433.php &
     echo "Jarvis started"
     ;;
   stop)
