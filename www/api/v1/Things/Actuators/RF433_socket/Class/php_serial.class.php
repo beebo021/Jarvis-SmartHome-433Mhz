@@ -569,6 +569,93 @@ class phpSerial
 
 		return false;
 	}
+	
+	/**
+	 * Reads the port until "\n" or no new datas are availible, then return the content.
+	 *
+	 * @return string
+	 */
+	function readLine ()
+	{
+		if ($this->_dState !== SERIAL_DEVICE_OPENED)
+		{
+			trigger_error("Device must be opened to read it", E_USER_WARNING);
+			return false;
+		}
+
+		if ($this->_os === "linux" || $this->_os === "osx")
+			{
+			// Behavior in OSX isn't to wait for new data to recover, but just grabs what's there!
+			// Doesn't always work perfectly for me in OSX
+			$content = ""; 
+			$i = 0;
+
+			do {
+				$char = fread($this->_dHandle, 1);
+				$content .= $char;
+			} while ((strlen($char))&&($char != "\n"));
+
+			return $content;
+		}
+		elseif ($this->_os === "windows")
+		{
+			// Windows port reading procedures still buggy
+			$content = ""; $i = 0;
+
+			do {
+				$char = fread($this->_dHandle, 1);
+				$content .= $char;
+			} while ((strlen($char))&&($char != "\n"));
+
+			return $content;
+		}
+
+		return false;
+	}
+	
+	/**
+	 * Reads the port until get "$stopChar", then return the content.
+	 *
+	 * @pararm string $stopChar , will stop before if the character is found
+	 * @return string
+	 */
+	function readUntil ($stopChar)
+	{
+		if ($this->_dState !== SERIAL_DEVICE_OPENED)
+		{
+			trigger_error("Device must be opened to read it", E_USER_WARNING);
+			return false;
+		}
+
+		if ($this->_os === "linux" || $this->_os === "osx")
+			{
+			// Behavior in OSX isn't to wait for new data to recover, but just grabs what's there!
+			// Doesn't always work perfectly for me in OSX
+			$content = ""; 
+			$i = 0;
+
+			do {
+				$char = fread($this->_dHandle, 1);
+				$content .= $char;
+			} while ($char != $stopChar);
+
+			return $content;
+		}
+		elseif ($this->_os === "windows")
+		{
+			// Windows port reading procedures still buggy
+			$content = ""; $i = 0;
+
+			do {
+				$char = fread($this->_dHandle, 1);
+				$content .= $char;
+			} while ($char != $stopChar);
+
+			return $content;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Flushes the output buffer
