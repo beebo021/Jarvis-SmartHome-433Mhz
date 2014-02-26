@@ -1,5 +1,5 @@
 #include <RCSwitch.h>
-
+#include <Time.h> 
 
 RCSwitch mySwitch = RCSwitch();
 String content = "";
@@ -7,6 +7,8 @@ char character;
 
 int ledPin = 13; // 13 -> PIN D13
 int senderPowerPin = 7; // 7 -> PIN D7
+String lastReceived = "";
+int timeLastReceived = 0;
 
 
 void setup() {
@@ -20,6 +22,8 @@ void setup() {
 
 void loop() {
   
+  
+  
   if (mySwitch.available()) {
     digitalWrite(ledPin, HIGH);
      
@@ -27,12 +31,30 @@ void loop() {
     
     if (value != 0) 
     {
-      Serial.print("D;");
-      Serial.print(mySwitch.getReceivedValue());
-      Serial.print(";");
-      Serial.print( mySwitch.getReceivedBitlength());
-      Serial.print(";");
-      Serial.println( mySwitch.getReceivedProtocol());
+      String received = "D;";
+      received += mySwitch.getReceivedValue();
+      received += ";";
+      received += mySwitch.getReceivedBitlength();
+      received += ";";
+      received += mySwitch.getReceivedProtocol();
+      received += "#";
+      
+      if (received == lastReceived)
+      {
+        if ((now() - timeLastReceived) > 2)
+        {
+          lastReceived = "";
+        }
+      }
+      
+      if (received != lastReceived)
+      {
+        Serial.println( received );              
+        lastReceived = received;
+        timeLastReceived = now();
+      }
+      
+
     }
 
     mySwitch.resetAvailable();
@@ -45,7 +67,9 @@ void loop() {
     character = Serial.read();
     
     if (character == '#') {
-     Serial.print("R;"); Serial.println(content);
+     Serial.print("R;"); 
+     Serial.print(content);
+     Serial.println("#");
      processString(content);
      content = "";   
     } else {
@@ -62,18 +86,17 @@ void processString(String data)
   String msg = getValue(data, ';', 0);
   String msg_size = getValue(data, ';', 1);
   String protocol = getValue(data, ';', 2);
-  
-  //Serial.print("msg: "); Serial.println(msg);
-  //Serial.print("msg_size: "); Serial.println(msg_size);
-  //Serial.print("protocol: "); Serial.println(protocol);
-  
+    
   mySwitch.setProtocol(protocol.toInt());
   mySwitch.send(msg.toInt(), msg_size.toInt());
   
   Serial.print("S;"); 
-  Serial.print(msg); Serial.print(";");
-  Serial.print(msg_size); Serial.print(";");
-  Serial.println(protocol);
+  Serial.print(msg); 
+  Serial.print(";");
+  Serial.print(msg_size); 
+  Serial.print(";");
+  Serial.print(protocol);
+  Serial.println("#");
   
   digitalWrite(senderPowerPin, LOW);
 }
