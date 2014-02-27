@@ -636,8 +636,9 @@ class phpSerial
 
 			do {
 				$char = fread($this->_dHandle, 1);
+				$char = trim(preg_replace('/\s\s+/', '', $char));
 				$content .= $char;
-			} while ($char != $stopChar);
+			} while ((strlen($content))&&($char != $stopChar));
 
 			return $content;
 		}
@@ -648,9 +649,10 @@ class phpSerial
 
 			do {
 				$char = fread($this->_dHandle, 1);
+				$char = trim(preg_replace('/\s\s+/', '', $char));
 				$content .= $char;
-			} while ($char != $stopChar);
-
+			} while ((strlen($content))&&($char != $stopChar));
+			
 			return $content;
 		}
 
