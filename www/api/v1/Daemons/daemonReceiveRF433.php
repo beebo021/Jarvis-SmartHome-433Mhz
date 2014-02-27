@@ -21,67 +21,28 @@ function readSerial()
 	
 	while (1)
 	{
-		echo "Waiting...";
-		//usleep(250000); // 0,25 Second
+		echo ".";
+		usleep(100000); // 0,1 Second
 		
-		$nowReceive = $serial->readUntil("#");
+		$received = $serial->readUntil("#");
 		
-		while (strlen($nowReceive)>3)
+		if (strlen($received))
 		{
-			$nowTime = time(); 
+			echo "\n\n".date("D/m/Y H:i:s")."\n".$received."\n"."\n";
 			
-			//echo "now: ".$nowTime."\n";
-			//echo "last: ".$lastTime."\n";
-			//echo "dif: ".($nowTime-$lastTime)."\n\n";
-		
-			if ($lastReceive == $nowReceive)
-			{
-				if (($nowTime-$lastTime)>2) 
-				{
-					$insert = 1;
-				}
-				else
-				{
-					$insert = 0;
-				}
-			}
-			else
-			{
-				$insert = 1;
-			}
-			
-			if ($insert)
-			{
-				$lastReceive = $nowReceive;
-				$lastTime = $nowTime;
-			
-				echo "\n";
-				echo "\n";
-				echo date("D/m/Y H:i:s", $nowTime);
-				echo "\n";
-				echo $nowReceive;
-				echo "\n";
-				echo "\n";
-				
-				$received = substr($nowReceive, 0, -1);
-				
-				$values = split(";", $received);
-				
-				$consult = "INSERT INTO rf433_log VALUES (NULL, '".$values[0]."', '".$values[1]."', '".$values[2]."', '".$values[3]."', NOW())";
+			$received = substr($received, 0, -1);
 
-				$conection->consultIns($consult);				
-			}
-		
-			$nowReceive = "";
-			$nowReceive = $serial->readLine();
+			$values = split(";", $received);
+
+			$consult = "INSERT INTO rf433_log VALUES (NULL, '".$values[0]."', '".$values[1]."', '".$values[2]."', '".$values[3]."', NOW())";
+			$conection->consultIns($consult);				
 		}
+		
+		$received = "";
 	}
 	
 	$serial->deviceClose(); 
-	
-	
 }
-
 
 readSerial();
 

@@ -65,11 +65,11 @@ $app->post('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app
 
 	$thing->addCmd(0, $cmd, 0);
 	
-	usleep(500000);
+	//usleep(500000);
 	
-	$thing2 = $controller->thingWithCod($cod_thing);
+	//$thing2 = $controller->thingWithCod($cod_thing);
 	
-	$r["response"] = $thing2->description();
+	$r["response"] = $thing->description();
 	
 	$json = json_encode($r);
 	
@@ -87,11 +87,13 @@ $app->get('/things/:cod_thing/cmds/:cmd', function ($cod_thing, $cmd) use ($app)
 
 	$thing->addCmd(0, $cmd, 0);
 	
-	usleep(500000);
+	//usleep(500000);
 	
-	$thing2 = $controller->thingWithCod($cod_thing);
+	//$thing2 = $controller->thingWithCod($cod_thing);
 	
-	$r["response"] = $thing2->description();
+	//$r["response"] = $thing->description();
+	
+	$r["response"] = "ok";
 	
 	$json = json_encode($r);
 	
@@ -107,7 +109,9 @@ $app->get('/things/:cod_thing', function ($cod_thing) use ($app)
 	$controller = new ThingController();
 	$thing = $controller->thingWithCod($cod_thing);
 
-	$r["response"] = $thing->description();
+	//$r["response"] = $thing->description();
+	
+	$r["response"] = "ok";
 	
 	$json = json_encode($r);
 	
