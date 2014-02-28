@@ -1,30 +1,44 @@
 #include <RCSwitch.h>
 #include <Time.h> 
 
+////////////
+// Config Start
+////////////
+
+int ledPin = 13; // 13 -> PIN D13
+int senderPowerPin = 7; // 7 -> PIN D7
+int senderPin = 10; // 10 -> PIN D10
+int receiverPin = 0; // 0 -> PIN D2
+
+////////////
+// Config End
+////////////
+
 RCSwitch mySwitch = RCSwitch();
 String content = "";
 char character;
 
-int ledPin = 13; // 13 -> PIN D13
-int senderPowerPin = 7; // 7 -> PIN D7
-String lastReceived = "";
-int timeLastReceived = 0;
-
+String lastValueReceived = "";
+int lastTimeReceived = 0;
 
 void setup() {
   
   Serial.begin(9600);
-  mySwitch.enableReceive(0); // 0 -> PIN D2
-  mySwitch.enableTransmit(10); //10 -> PIN D10
+  mySwitch.enableReceive(receiverPin); // 0 -> PIN D2
+  mySwitch.enableTransmit(senderPin); //10 -> PIN D10
   pinMode(senderPowerPin, OUTPUT); 
 }
 
-
 void loop() {
   
+  checkReceive();
+  checkSend();
+}
+
+void checkReceive() {
   
-  
-  if (mySwitch.available()) {
+  if (mySwitch.available()) 
+  {
     digitalWrite(ledPin, HIGH);
      
     int value = mySwitch.getReceivedValue();
@@ -39,30 +53,31 @@ void loop() {
       received += mySwitch.getReceivedProtocol();
       received += "#";
       
-      if (received == lastReceived)
+      if (received == lastValueReceived)
       {
-        if ((now() - timeLastReceived) > 2)
+        if ((now() - lastTimeReceived) > 3)
         {
-          lastReceived = "";
+          lastValueReceived = "";
         }
       }
       
-      if (received != lastReceived)
+      if (received != lastValueReceived)
       {
         Serial.println( received );              
-        lastReceived = received;
-        timeLastReceived = now();
-      }
-      
-
+        lastValueReceived = received;
+        lastTimeReceived = now();
+      }  
     }
 
     mySwitch.resetAvailable();
     
     digitalWrite(ledPin, LOW); 
-  }
+  }  
+}
 
-  while(Serial.available()) {
+
+void checkSend() {
+while(Serial.available()) {
     
     character = Serial.read();
     
@@ -75,7 +90,7 @@ void loop() {
     } else {
         content.concat(character);
     }
-  }
+  }  
 }
 
 
